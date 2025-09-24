@@ -1,0 +1,23 @@
+# Arquivos do Docker
+Dockerfile
+Dockerfile.prod
+docker-compose.yml
+docker-compose.dev.yml
+
+# Dependências
+node_modules
+
+# Arquivos de build do Next.js
+.next
+
+# Arquivos de ambiente locais
+.env.local
+.env.development.local
+.env.production.local
+
+# Logs e arquivos do sistema
+npm-debug.log
+*.log
+
+# Pasta do Git
+.git

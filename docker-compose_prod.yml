@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Serviço da aplicação Next.js para PRODUÇÃO
+  next-app:
+    container_name: scrum_next_app_prod
+    build:
+      context: .
+      dockerfile: Dockerfile.prod # Usa o Dockerfile de produção
+    ports:
+      - "3000:3000"
+    # Em produção real, as variáveis de ambiente devem ser passadas de forma segura,
+    # mas para rodar localmente, podemos usar o .env.local
+    env_file:
+      - .env.local
+    depends_on:
+      - postgres
+    networks:
+      - scrum_network
+
+  # Serviço do banco de dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: scrum_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: scrum_master
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_data:/data/postgres
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - scrum_network
+
+  # Serviço da interface web para o banco
+  adminer:
+    image: adminer
+    container_name: scrum_adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - scrum_network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  scrum_network:
+    driver: bridge

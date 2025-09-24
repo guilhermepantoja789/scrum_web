@@ -1,0 +1,78 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: scrum-web:dev
+    container_name: scrum_web
+    env_file:
+      - .env.local
+    environment:
+      NODE_ENV: development
+      JWT_SECRET: ${JWT_SECRET:-supersecret}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://app:app@db:5432/app?schema=public}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+#    command: >
+#      sh -lc "
+#        apk add --no-cache libc6-compat &&
+#        corepack enable &&
+#        corepack prepare pnpm@10.15.1 --activate &&
+#        pnpm install &&
+#        pnpm prisma generate --schema ./prisma/schema.prisma &&
+#        pnpm dev
+#      "
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  db:
+    image: postgres:16-alpine
+    container_name: scrum_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: scrum_redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  adminer:
+    image: adminer
+    container_name: scrum_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    depends_on:
+      - db
+
+volumes:
+  pg_data:
+  redis_data:
