@@ -1,190 +1,161 @@
-# 🚀 Scrum Master - Sistema Completo
+# 🚀 Scrum Master Pro - Sistema de Gerenciamento de Projetos
 
-Sistema completo de gerenciamento Scrum com autenticação e banco PostgreSQL.
+Um sistema completo de gerenciamento de projetos e tarefas, inspirado em metodologias ágeis como Scrum e Kanban. Desenvolvido com Next.js, Prisma e PostgreSQL.
 
-## ✨ Funcionalidades
+### ✨ Funcionalidades
 
-### 🔐 Autenticação
-- **Cadastro de usuários** com validação de email único
-- **Login seguro** com JWT tokens
-- **Controle de acesso** - só usuários autenticados acessam o sistema
-- **Hash de senhas** com bcryptjs
+*   **Gestão de Acesso e Segurança:**
+    *   **Autenticação por JWT:** Login seguro utilizando `jose` para tokens JWT.
+    *   **Controle de Papéis (Roles):** Sistema de permissões baseado em papéis (e.g., Admin, Member).
+    *   **Hashing de Senhas:** Senhas armazenadas com segurança usando `bcryptjs`.
+    *   **Middleware de Proteção:** Rotas de API e páginas protegidas, acessíveis apenas para usuários autenticados e autorizados.
 
-### 📊 Gestão de Projetos
-- **Criar projetos** com nome, descrição e datas
-- **Listar projetos** do usuário logado
-- **Editar e excluir** projetos
-- **Filtros e busca** por nome
+*   **Gestão de Projetos:**
+    *   **Criação e Gestão de Projetos:** CRUD completo para projetos com status (Ativo, Pausado, Concluído).
+    *   **Equipes de Projeto:** Adicione membros a projetos com papéis específicos.
+    *   **Ownership:** Projetos têm um "dono" claro.
 
-### 🏃‍♂️ Sprints e Tarefas
-- **Criar sprints** vinculadas a projetos
-- **Gerenciar tarefas** com status, prioridade e responsáveis
-- **Quadro Kanban** para visualização de fluxo
-- **Relatórios** de progresso
+*   **Organização com Sprints e Tarefas:**
+    *   **Planejamento de Sprints:** Crie e gerencie sprints com datas de início/fim e pontuação (Story Points).
+    *   **Gestão Completa de Tarefas:**
+        *   CRUD de tarefas vinculadas a projetos e sprints.
+        *   **Tipos de Tarefa:** Categorize tarefas (e.g., Funcionalidade, Bug, Melhoria) com ícones e cores customizáveis.
+        *   **Prioridades:** Defina prioridades (Baixa, Média, Alta, Urgente).
+        *   **Status:** Acompanhe o progresso com um fluxo claro (A Fazer, Fazendo, Feito, Cancelado).
+        *   **Estimativas:** Utilize Story Points para estimar o esforço das tarefas.
+        *   **Atribuição:** Desigine tarefas a membros específicos da equipe.
+    *   **Subtarefas:** Quebre tarefas complexas em itens menores e gerenciáveis.
 
-## 🗄️ Banco de Dados
+*   **Colaboração:**
+    *   **Comentários:** Discuta tarefas diretamente na plataforma.
+    *   **Anexos:** Adicione arquivos e documentos às tarefas.
 
-**PostgreSQL Local** com Docker:
-- Dados persistentes (não mais em memória)
-- Relacionamentos entre usuários, projetos, sprints e tarefas
-- Migrations automáticas na inicialização
+*   **Visualização e Relatórios:**
+    *   **Quadro Kanban:** Visualize o fluxo de trabalho das tarefas de forma intuitiva.
+    *   **Dashboard:** Painel com visão geral do status dos projetos e tarefas.
+    *   **Relatórios (em desenvolvimento):** Gráficos e métricas sobre o progresso das sprints e da equipe.
 
-## 🚀 Como Usar
+### 🛠️ Tech Stack
 
-### 1. Iniciar o Banco de Dados
-```bash
-# Subir PostgreSQL com Docker
-docker-compose up -d
+Esta aplicação é construída com um conjunto de tecnologias modernas e robustas:
 
-# Verificar se está rodando
-docker-compose ps
-```
+-   **Framework:** [Next.js](https://nextjs.org/) (App Router)
+-   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+-   **ORM:** [Prisma](https://www.prisma.io/)
+-   **Banco de Dados:** [PostgreSQL](https://www.postgresql.org/)
+-   **Cache:** [Redis](https://redis.io/)
+-   **UI:** [Tailwind CSS](https://tailwindcss.com/) com [shadcn/ui](https://ui.shadcn.com/) e [Radix UI](https://www.radix-ui.com/)
+-   **Gerenciamento de Formulários:** [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
+-   **Autenticação:** [Jose (JWT)](https://github.com/panva/jose)
+-   **Visualização de Dados:** [Recharts](https://recharts.org/)
+-   **Ambiente de Execução:** [Docker](https://www.docker.com/)
 
-### 2. Instalar Dependências
-```bash
-pnpm install
-```
+### 🚀 Começando
 
-### 3. Iniciar o Projeto
-```bash
-pnpm run dev
-```
+Siga estas instruções para configurar e rodar o projeto em seu ambiente de desenvolvimento local.
 
-### 4. Acessar o Sistema
-- **URL**: http://localhost:3000
-- **Primeira vez**: Crie uma conta na aba "Cadastro"
-- **Login**: Use suas credenciais na aba "Login"
+#### **Pré-requisitos**
 
-## 📋 Fluxo Completo
+-   [Node.js](https://nodejs.org/) (v20.x ou superior)
+-   [pnpm](https://pnpm.io/installation) (v10.x ou superior)
+-   [Docker](https://www.docker.com/get-started/) e [Docker Compose](https://docs.docker.com/compose/install/)
 
-### 1. **Cadastro/Login**
-- Acesse http://localhost:3000
-- Cadastre uma nova conta ou faça login
-- Sistema redireciona automaticamente para o dashboard
+#### **Instalação e Configuração**
 
-### 2. **Criar Projeto**
-- No dashboard, clique em "Novo Projeto"
-- Preencha nome e descrição
-- Projeto é salvo no banco PostgreSQL
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/seu-usuario/seu-repositorio.git
+    cd seu-repositorio
+    ```
 
-### 3. **Gerenciar Dados**
-- **Projetos**: Página dedicada com CRUD completo
-- **Sprints**: Criar sprints vinculadas aos projetos
-- **Tarefas**: Adicionar tarefas às sprints
-- **Kanban**: Visualizar progresso das tarefas
+2.  **Crie o arquivo de variáveis de ambiente:**
+    Copie o arquivo de exemplo `.env.example` para um novo arquivo chamado `.env.local`. Os valores padrão já estão configurados para o ambiente Docker local.
+    ```bash
+    cp .env.example .env.local
+    ```
 
-## 🛠️ APIs Disponíveis
+3.  **Instale as dependências do projeto:**
+    ```bash
+    pnpm install
+    ```
 
-### Autenticação
-- `POST /api/auth/register` - Cadastro
-- `POST /api/auth/login` - Login
+4.  **Inicie os serviços de backend (Banco de Dados e Cache):**
+    Este comando irá iniciar os contêineres do PostgreSQL e do Redis em background.
+    ```bash
+    pnpm run db:start
+    ```
+    *Para verificar se os contêineres estão rodando, use `docker ps`.*
 
-### Projetos
-- `GET /api/projects` - Listar projetos do usuário
-- `POST /api/projects` - Criar projeto
-- `PUT /api/projects/[id]` - Editar projeto
-- `DELETE /api/projects/[id]` - Excluir projeto
+5.  **Popule o banco de dados com dados iniciais:**
+    Este script irá aplicar as migrações do Prisma e executar o `seed` para criar dados essenciais, como papéis de usuário e tipos de tarefa.
+    ```bash
+    pnpm run db:seed
+    ```
 
-### Sprints
-- `GET /api/sprints` - Listar sprints
-- `POST /api/sprints` - Criar sprint
+6.  **Inicie a aplicação em modo de desenvolvimento:**
+    ```bash
+    pnpm run dev
+    ```
 
-### Tarefas
-- `GET /api/tasks` - Listar tarefas
-- `POST /api/tasks` - Criar tarefa
+7.  **Acesse o sistema:**
+    -   Abra seu navegador e acesse [http://localhost:3000](http://localhost:3000).
+    -   A aplicação estará pronta para uso. Você pode criar uma nova conta ou explorar a API.
 
-## 🔒 Segurança
+### 📜 Scripts Disponíveis
 
-- **JWT tokens** com expiração de 7 dias
-- **Middleware de autenticação** em todas as APIs
-- **Isolamento de dados** por usuário
-- **Senhas com hash** bcrypt
-- **Validações** de entrada em todas as APIs
+Todos os scripts podem ser executados com `pnpm run <nome-do-script>`.
 
-## 🗃️ Estrutura do Banco
+| Comando         | Descrição                                                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------- |
+| `dev`           | Inicia o servidor de desenvolvimento do Next.js em `http://localhost:3000`.                           |
+| `build`         | Compila a aplicação para produção.                                                                    |
+| `start`         | Inicia um servidor de produção após a compilação (`build`).                                           |
+| `lint`          | Executa o linter (ESLint) para analisar o código em busca de problemas.                               |
+| `db:start`      | Inicia os contêineres Docker do PostgreSQL, Redis e Adminer em background.                            |
+| `db:stop`       | Para e remove os contêineres Docker definidos no `docker-compose.yml`.                                |
+| `db:reset`      | Para, remove os contêineres e **deleta todos os volumes de dados** (PostgreSQL e Redis). Use com cuidado. |
+| `db:seed`       | Executa o script `prisma/seed.ts` para popular o banco de dados com dados iniciais (requer `tsx`).      |
 
-```sql
-users (id, name, email, password, created_at, updated_at)
-  ↓
-projetos (id, nome, descricao, user_id, status, datas)
-  ↓  
-sprints (id, nome, projeto_id, user_id, datas, pontos)
-  ↓
-tarefas (id, titulo, projeto_id, sprint_id, assignee_id, status)
-```
+### 🗄️ Banco de Dados
 
-## 📊 Interface de Banco
+O projeto utiliza **PostgreSQL** como banco de dados, gerenciado pelo ORM **Prisma**. A estrutura do banco de dados é definida no arquivo `prisma/schema.prisma`.
 
-**Adminer** (interface web do banco):
-- **URL**: http://localhost:8080
-- **Sistema**: PostgreSQL
-- **Servidor**: postgres
-- **Usuário**: admin
-- **Senha**: admin123
-- **Base**: scrum_master
+#### **Visão Geral do Schema**
 
-## 🔧 Comandos Úteis
+O schema é modelado em torno dos seguintes conceitos principais:
 
-```bash
-# Gerenciar banco
-pnpm run db:start    # Iniciar PostgreSQL
-pnpm run db:stop     # Parar PostgreSQL
-pnpm run db:reset    # Reiniciar (limpar dados)
+-   **`User`**: Armazena informações dos usuários, como email, senha (com hash) e seu papel no sistema.
+-   **`Role`**: Define os papéis dos usuários (ex: "Admin", "Member") e suas permissões.
+-   **`Project`**: Representa um projeto, com um dono (`owner`) e múltiplos membros.
+-   **`ProjectMember`**: Tabela de junção que conecta `User` e `Project`, definindo quem faz parte de qual projeto.
+-   **`Sprint`**: Períodos de trabalho dentro de um projeto, com datas de início e fim e estimativas de pontos.
+-   **`Task`**: A unidade de trabalho fundamental. Uma tarefa pertence a um projeto, pode estar em uma sprint e ser atribuída a um usuário.
+-   **`TaskType`**: Tipos de tarefa customizáveis (ex: "Bug", "Funcionalidade") para melhor categorização.
+-   **`Subtask`**: Itens menores para dividir uma `Task` principal.
+-   **`Comment`** e **`Attachment`**: Permitem colaboração através de comentários e anexos de arquivos nas tarefas.
 
-# Desenvolvimento
-pnpm run dev         # Iniciar desenvolvimento
-pnpm run build       # Build de produção
-pnpm run start       # Iniciar produção
-```
+#### **Acesso via Adminer (Interface Gráfica)**
 
-## 📁 Estrutura do Projeto
+Uma interface web para o banco de dados (Adminer) fica disponível enquanto os contêineres Docker estão rodando.
 
-```
-app/
-├── api/auth/          # APIs de autenticação
-├── api/projects/      # APIs de projetos
-├── api/sprints/       # APIs de sprints
-├── api/tasks/         # APIs de tarefas
-├── dashboard/         # Dashboard principal
-├── projects/          # Gestão de projetos
-└── page.tsx          # Login/Cadastro
+-   **URL**: [http://localhost:8080](http://localhost:8080)
+-   **Sistema**: `PostgreSQL`
+-   **Servidor**: `db`
+-   **Usuário**: `app`
+-   **Senha**: `app`
+-   **Base de Dados**: `app`
 
-lib/
-├── auth/             # Middleware de autenticação
-├── data/             # Funções do banco
-├── db/               # Conexão PostgreSQL
-└── types/            # Tipos TypeScript
+### 🔐 Segurança
 
-hooks/
-└── use-auth.ts       # Hook de autenticação
+-   **Autenticação JWT:** A comunicação com a API é protegida usando JSON Web Tokens (JWT) gerados pela biblioteca `jose`.
+-   **Hashing de Senhas:** As senhas dos usuários são protegidas com o algoritmo `bcryptjs` antes de serem armazenadas.
+-   **Middleware de Proteção:** Um middleware no Next.js intercepta requisições para rotas protegidas, validando o token JWT e as permissões do usuário antes de permitir o acesso.
+-   **Variáveis de Ambiente:** Informações sensíveis, como segredos de token e URLs de conexão, são gerenciadas através de variáveis de ambiente (`.env.local`) e não são expostas no código-fonte.
 
-database/
-└── init/             # Scripts de inicialização do banco
-```
+### 🎯 Próximos Passos
 
-## 🎯 Diferenças da Versão Anterior
-
-### ❌ Antes (Dados Mockados)
-- Dados em arrays JavaScript
-- Perdidos ao recarregar página
-- Sem autenticação real
-- LocalStorage para persistência
-
-### ✅ Agora (Banco Real)
-- **PostgreSQL** com relacionamentos
-- **Dados persistentes** entre sessões
-- **Autenticação JWT** completa
-- **APIs REST** funcionais
-- **Controle de acesso** por usuário
-
-## 🚀 Próximos Passos
-
-1. **Deploy em produção** (Vercel + banco remoto)
-2. **Adicionar mais funcionalidades** (comentários, anexos)
-3. **Melhorar relatórios** (gráficos, métricas)
-4. **Notificações** em tempo real
-5. **Colaboração** entre usuários
-
----
-
-**Sistema 100% funcional** com autenticação e banco de dados real! 🎉
+1.  **Deploy em produção** (Vercel + banco remoto).
+2.  **Melhorar relatórios** (gráficos, métricas de sprint).
+3.  **Notificações** em tempo real (ex: ao ser atribuído a uma tarefa).
+4.  **Testes automatizados** (unitários e de integração).
+5.  **Internacionalização (i18n)** da interface.
